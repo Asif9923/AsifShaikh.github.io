@@ -734,9 +734,9 @@ footer p{font-size:11px;color:var(--w35);font-weight:300;letter-spacing:.06em}
           <p style="margin-top:.75rem">Open to senior functional consulting, lead consultant, and solution architect opportunities across the Dynamics 365 and Power Platform ecosystem.</p>
         </div>
         <div class="clink-items">
-          <a href="/cdn-cgi/l/email-protection#78390b111e560b1019111310414e4e494c381f15191114561b1715" class="clink">
+          <a href="mailto:Asif.shaikh96614@gmail.com" class="clink">
             <div class="clink-icon"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></div>
-            <div><p class="clink-lbl">Email</p><p class="clink-val"><span class="__cf_email__" data-cfemail="1756647e7139647f767e7c7f2e2121262357707a767e7b3974787a">[email&#160;protected]</span></p></div>
+            <div><p class="clink-lbl">Email</p><p class="clink-val">Asif.shaikh96614@gmail.com</p></div>
             <span class="clink-arr">›</span>
           </a>
           <a href="tel:+919923001900" class="clink">
@@ -788,7 +788,7 @@ footer p{font-size:11px;color:var(--w35);font-weight:300;letter-spacing:.06em}
   <p style="color:rgba(240,236,227,.2);font-size:10px;letter-spacing:.1em">DESIGNED TO IMPRESS</p>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 // scroll progress
 const prog=document.getElementById('prog');
 const nav=document.getElementById('nav');
@@ -866,3 +866,11 @@ async function submitForm(e){
       throw new Error(data.error||'Submission failed');
     }
   } catch(err){
+    btn.innerHTML='<span>Error — try emailing directly</span>';
+    btn.style.background='rgba(239,68,68,0.8)';
+    setTimeout(()=>{btn.innerHTML=orig;btn.style.background='';btn.disabled=false;btn.style.opacity='';},4000);
+  }
+}
+</script>
+</body>
+</html>
