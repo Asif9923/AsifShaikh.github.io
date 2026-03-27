@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Asif Shaikh — Lead D365 Functional Consultant</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:#07090d;
+  --bg1:#0c0f16;
+  --bg2:#111520;
+  --bg3:#161c2a;
+  --gold:#c9a96e;
+  --gold2:#e8c98a;
+  --goldf:rgba(201,169,110,0.15);
+  --goldl:rgba(201,169,110,0.25);
+  --blue:#3b82f6;
+  --blue2:#60a5fa;
+  --bluef:rgba(59,130,246,0.12);
+  --w:#f0ece3;
+  --w80:rgba(240,236,227,0.8);
+  --w55:rgba(240,236,227,0.55);
+  --w35:rgba(240,236,227,0.35);
+  --w15:rgba(240,236,227,0.15);
+  --w08:rgba(240,236,227,0.08);
+  --w04:rgba(240,236,227,0.04);
+  --line:rgba(240,236,227,0.08);
+  --serif:'Playfair Display',Georgia,serif;
+  --sans:'Outfit',system-ui,sans-serif;
+  --ease:cubic-bezier(0.25,0.46,0.45,0.94);
+}
+
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--bg);color:var(--w);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+/* ── SCROLL PROGRESS ── */
+#prog{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--blue));z-index:1000;width:0%;transition:width 0.1s linear}
+
+/* ── CURSOR ── */
+#cur{position:fixed;width:480px;height:480px;border-radius:50%;background:radial-gradient(circle,rgba(201,169,110,0.05) 0%,transparent 65%);pointer-events:none;transform:translate(-50%,-50%);z-index:1;transition:left .12s,top .12s}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:500;padding:1.4rem 4rem;display:flex;justify-content:space-between;align-items:center;transition:all .3s}
+nav.scrolled{background:rgba(7,9,13,0.9);backdrop-filter:blur(24px);border-bottom:1px solid var(--line);padding:1rem 4rem}
+.nav-logo{font-family:var(--serif);font-size:1.5rem;font-weight:300;text-decoration:none;background:linear-gradient(135deg,var(--gold),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.nav-links{display:flex;gap:2.5rem;list-style:none}
+.nav-links a{font-size:11px;font-weight:300;letter-spacing:.18em;text-transform:uppercase;color:var(--w35);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--gold)}
+.nav-hire{display:flex;align-items:center;gap:.6rem;padding:.5rem 1.4rem;background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--bg);font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;border-radius:2px;transition:opacity .2s,transform .15s}
+.nav-hire:hover{opacity:.85;transform:translateY(-1px)}
+
+/* ── HERO ── */
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:0 5rem;position:relative;overflow:hidden}
+canvas#stars{position:absolute;inset:0;z-index:0;pointer-events:none}
+.hero-left{position:relative;z-index:2;padding:8rem 0 4rem}
+.avail-badge{display:inline-flex;align-items:center;gap:.6rem;padding:.45rem 1rem .45rem .75rem;background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.2);border-radius:20px;margin-bottom:2rem}
+.avail-ping{position:relative;width:8px;height:8px}
+.avail-ping::before{content:'';position:absolute;inset:0;border-radius:50%;background:#10b981;animation:ping 1.5s ease-in-out infinite}
+.avail-ping::after{content:'';position:absolute;inset:1px;border-radius:50%;background:#10b981}
+@keyframes ping{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(2.2);opacity:0}}
+.avail-badge span{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#10b981;font-weight:400}
+.hero-name{font-family:var(--serif);font-size:clamp(3.5rem,5.5vw,6rem);font-weight:300;line-height:.92;letter-spacing:-.02em;margin-bottom:.5rem}
+.hero-name .first{color:var(--w)}
+.hero-name .last{color:var(--gold);font-style:italic;display:block}
+.hero-typed-wrap{display:flex;align-items:center;gap:.75rem;margin-bottom:2.25rem;height:2rem}
+.hero-typed-label{font-size:13px;color:var(--w35);font-weight:300;letter-spacing:.04em}
+.hero-typed{font-size:14px;color:var(--blue2);font-weight:400;letter-spacing:.04em;border-right:1.5px solid var(--blue2);padding-right:3px;white-space:nowrap;overflow:hidden}
+.hero-desc{font-size:14.5px;color:var(--w35);line-height:1.9;max-width:480px;font-weight:300;margin-bottom:3rem;border-left:2px solid var(--goldl);padding-left:1.25rem}
+.hero-cta{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:3rem}
+.btn-primary{display:inline-flex;align-items:center;gap:.6rem;padding:.9rem 2rem;background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--bg);font-size:11px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;text-decoration:none;border-radius:2px;transition:opacity .2s,transform .15s,box-shadow .2s}
+.btn-primary:hover{opacity:.88;transform:translateY(-2px);box-shadow:0 8px 30px rgba(201,169,110,0.3)}
+.btn-secondary{display:inline-flex;align-items:center;gap:.6rem;padding:.9rem 2rem;border:1px solid var(--goldl);color:var(--gold);font-size:11px;font-weight:300;letter-spacing:.15em;text-transform:uppercase;text-decoration:none;border-radius:2px;transition:all .2s}
+.btn-secondary:hover{background:var(--goldf);border-color:var(--gold);transform:translateY(-2px)}
+.hero-stats{display:flex;gap:2.5rem}
+.hstat{}
+.hstat-num{font-family:var(--serif);font-size:2rem;font-weight:300;color:var(--gold);line-height:1}
+.hstat-label{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--w35);margin-top:.25rem;font-weight:300}
+
+/* hero right — orbit visual */
+.hero-right{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;padding:8rem 0 4rem}
+.orbit-wrap{position:relative;width:420px;height:420px}
+.orbit-core{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:140px;height:140px;border-radius:50%;background:linear-gradient(135deg,var(--bg2),var(--bg3));border:1px solid var(--goldl);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:3}
+.orbit-core-mono{font-family:var(--serif);font-size:2.8rem;font-weight:300;color:var(--gold);line-height:1}
+.orbit-core-label{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--w35);margin-top:.3rem;font-weight:300}
+.orbit-ring{position:absolute;top:50%;left:50%;border-radius:50%;border:1px solid var(--goldl);transform:translate(-50%,-50%)}
+.ring1{width:210px;height:210px;border-color:rgba(201,169,110,0.15);animation:spin1 18s linear infinite}
+.ring2{width:300px;height:300px;border-color:rgba(59,130,246,0.12);animation:spin1 28s linear infinite reverse}
+.ring3{width:390px;height:390px;border-color:rgba(201,169,110,0.07);animation:spin1 40s linear infinite}
+@keyframes spin1{from{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(360deg)}}
+.orbit-dot{position:absolute;width:10px;height:10px;border-radius:50%;background:var(--gold);top:50%;left:50%;transform-origin:0 0}
+.orbit-dot2{background:var(--blue)}
+.orbit-dot3{background:var(--gold);width:7px;height:7px}
+.orbit-tag{position:absolute;background:rgba(12,15,22,0.9);border:1px solid var(--line);padding:.4rem .9rem;border-radius:20px;font-size:10px;letter-spacing:.1em;color:var(--w55);white-space:nowrap;backdrop-filter:blur(8px);font-weight:300}
+.orbit-tag.t1{top:12%;left:60%;animation:float1 4s ease-in-out infinite}
+.orbit-tag.t2{bottom:18%;right:5%;animation:float1 5s ease-in-out infinite .8s}
+.orbit-tag.t3{top:45%;left:0%;animation:float1 4.5s ease-in-out infinite 1.5s}
+.orbit-tag.t4{bottom:8%;left:25%;animation:float1 3.8s ease-in-out infinite .4s}
+@keyframes float1{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+
+/* ── MARQUEE ── */
+.marquee-wrap{overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--bg1);padding:.9rem 0}
+.marquee-inner{display:inline-flex;animation:mq 40s linear infinite}
+.marquee-inner:hover{animation-play-state:paused}
+.mi{display:inline-flex;align-items:center;gap:1rem;padding:0 2rem;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--w35);font-weight:300}
+.md{width:3px;height:3px;border-radius:50%;background:var(--gold)}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ── SECTIONS ── */
+section{padding:7rem 5rem}
+.container{max-width:1120px;margin:0 auto}
+.sh{display:flex;align-items:center;gap:1.25rem;margin-bottom:4.5rem}
+.sn{font-family:var(--serif);font-size:.8rem;font-weight:300;color:rgba(201,169,110,.5);letter-spacing:.1em}
+.st{font-family:var(--serif);font-size:clamp(2rem,3vw,2.8rem);font-weight:300;color:var(--w);letter-spacing:-.02em}
+.sr{flex:1;height:1px;background:var(--line)}
+
+/* ── ABOUT ── */
+.about{background:var(--bg1)}
+.about-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:5rem;align-items:start}
+.about-lead{font-family:var(--serif);font-size:1.6rem;font-weight:300;line-height:1.5;color:var(--w);margin-bottom:1.5rem}
+.about-lead em{color:var(--gold);font-style:italic}
+.about-body{font-size:14px;color:var(--w35);line-height:1.9;font-weight:300;margin-bottom:1rem}
+.about-pills{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:1.75rem}
+.pill{padding:.3rem .9rem;border:1px solid var(--goldl);border-radius:2px;font-size:10px;letter-spacing:.1em;color:var(--gold);font-weight:300}
+
+/* stat cards from Gemini */
+.about-stats{display:flex;flex-direction:column;gap:1rem}
+.stat-card{background:var(--bg2);border:1px solid var(--line);border-radius:4px;padding:1.5rem;display:flex;align-items:center;gap:1.25rem;transition:border-color .25s,transform .2s}
+.stat-card:hover{border-color:var(--goldl);transform:translateX(4px)}
+.stat-icon{width:46px;height:46px;border-radius:3px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.stat-icon svg{width:20px;height:20px}
+.stat-num{font-family:var(--serif);font-size:2rem;font-weight:300;color:var(--w);line-height:1}
+.stat-lbl{font-size:11px;color:var(--w35);font-weight:300;margin-top:.2rem;letter-spacing:.04em}
+
+/* ── EXPERTISE ── */
+.expertise{background:var(--bg)}
+.exp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+.ec{background:var(--bg1);padding:2.25rem;position:relative;overflow:hidden;transition:background .25s;cursor:default}
+.ec:hover{background:var(--bg2)}
+.ec::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--blue));transform:scaleX(0);transform-origin:left;transition:transform .4s var(--ease)}
+.ec:hover::before{transform:scaleX(1)}
+.ec-num{font-family:var(--serif);font-size:3rem;font-weight:300;color:var(--w04);line-height:1;margin-bottom:1.25rem;letter-spacing:-.04em}
+.ec-icon{width:42px;height:42px;border:1px solid var(--goldl);border-radius:2px;display:flex;align-items:center;justify-content:center;margin-bottom:1.1rem}
+.ec-icon svg{width:18px;height:18px;fill:var(--gold)}
+.ec h3{font-size:13px;font-weight:500;color:var(--w80);margin-bottom:.65rem;letter-spacing:.03em}
+.ec p{font-size:13px;color:var(--w35);line-height:1.75;font-weight:300;margin-bottom:1.4rem}
+.ec-tags{display:flex;flex-wrap:wrap;gap:.35rem}
+.tag{padding:.2rem .6rem;border:1px solid var(--w08);border-radius:2px;font-size:10px;letter-spacing:.07em;color:var(--w35);font-weight:300}
+
+/* ── EXPERIENCE — zigzag (Gemini) + luxury styling (mine) ── */
+.experience{background:var(--bg1)}
+.zig-timeline{position:relative;max-width:900px;margin:0 auto}
+.zig-timeline::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,transparent,var(--goldl) 10%,var(--goldl) 90%,transparent);transform:translateX(-50%)}
+.zt{display:flex;align-items:flex-start;gap:0;margin-bottom:3rem;position:relative}
+.zt:nth-child(odd){flex-direction:row}
+.zt:nth-child(even){flex-direction:row-reverse}
+.zt-dot{position:absolute;left:50%;top:18px;width:12px;height:12px;border-radius:50%;background:var(--bg1);border:2px solid var(--gold);transform:translateX(-50%);z-index:2;transition:background .2s,box-shadow .2s}
+.zt:hover .zt-dot{background:var(--gold);box-shadow:0 0 0 4px var(--goldf)}
+.zt-card{width:calc(50% - 2.5rem);background:var(--bg2);border:1px solid var(--line);border-radius:3px;padding:2rem;position:relative;transition:border-color .25s,transform .2s,box-shadow .2s;overflow:hidden}
+.zt-card::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(201,169,110,0.03) 0%,transparent 60%);pointer-events:none}
+.zt:nth-child(odd) .zt-card{margin-right:auto}
+.zt:nth-child(even) .zt-card{margin-left:auto}
+.zt-card:hover{border-color:var(--goldl);transform:translateY(-3px);box-shadow:0 16px 48px rgba(0,0,0,.5)}
+.zt-current-badge{display:inline-flex;align-items:center;gap:.4rem;padding:.25rem .75rem;background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.25);border-radius:20px;margin-bottom:.75rem}
+.zt-current-badge span{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:#10b981;font-weight:400}
+.zt-current-badge::before{content:'';width:5px;height:5px;border-radius:50%;background:#10b981;animation:ping 1.5s ease-in-out infinite}
+.zt-co{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:400;margin-bottom:.4rem}
+.zt-role{font-family:var(--serif);font-size:1.25rem;font-weight:400;color:var(--w);margin-bottom:.35rem;line-height:1.25}
+.zt-period{font-size:11px;color:var(--w35);font-weight:300;margin-bottom:.35rem;letter-spacing:.04em}
+.zt-env{font-size:11px;color:var(--w35);font-style:italic;font-weight:300;margin-bottom:1rem;letter-spacing:.03em}
+.zt-bullets{list-style:none;display:flex;flex-direction:column;gap:.5rem;margin-bottom:1.25rem}
+.zt-bullets li{font-size:12.5px;color:var(--w35);font-weight:300;padding-left:1.1rem;position:relative;line-height:1.65}
+.zt-bullets li::before{content:'›';position:absolute;left:0;color:var(--gold);font-size:14px;line-height:1.4}
+.zt-mods{display:flex;flex-wrap:wrap;gap:.35rem}
+.mtag{padding:.22rem .7rem;background:var(--goldf);border:1px solid var(--goldl);border-radius:2px;font-size:10px;letter-spacing:.1em;color:var(--gold);font-weight:300}
+
+/* ── SKILLS ── */
+.skills-s{background:var(--bg)}
+.skills-wrap{display:grid;grid-template-columns:1fr 1fr;gap:4.5rem}
+.sg-title{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:400;margin-bottom:2rem;padding-bottom:.75rem;border-bottom:1px solid var(--goldl)}
+.sbi{margin-bottom:1.5rem}
+.srow{display:flex;justify-content:space-between;margin-bottom:.45rem}
+.sname{font-size:13px;color:var(--w55);font-weight:300}
+.spct{font-size:11px;color:var(--gold);font-weight:300}
+.btrack{height:1px;background:var(--w08);position:relative}
+.bfill{height:1px;background:linear-gradient(90deg,var(--gold),var(--gold2));transform-origin:left;animation:bfg 1.6s var(--ease) forwards;position:relative}
+.bfill::after{content:'';position:absolute;right:-1px;top:50%;transform:translateY(-50%);width:5px;height:5px;border-radius:50%;background:var(--gold2)}
+@keyframes bfg{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+
+/* skill tags (Gemini-style) */
+.skill-tag-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:4rem}
+.stg-cell{background:var(--bg1);padding:2rem;transition:background .2s}
+.stg-cell:hover{background:var(--bg2)}
+.stg-head{display:flex;align-items:center;gap:.6rem;margin-bottom:1.25rem}
+.stg-head svg{width:16px;height:16px}
+.stg-head span{font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--w55)}
+.stg-tags{display:flex;flex-wrap:wrap;gap:.4rem}
+.stg-tag{padding:.25rem .75rem;border-radius:20px;font-size:10px;font-weight:400;letter-spacing:.05em;border:1px solid transparent}
+.stg-tag.gold{background:var(--goldf);border-color:var(--goldl);color:var(--gold)}
+.stg-tag.blue{background:var(--bluef);border-color:rgba(59,130,246,.25);color:var(--blue2)}
+.stg-tag.green{background:rgba(16,185,129,.08);border-color:rgba(16,185,129,.2);color:#34d399}
+.stg-tag.purple{background:rgba(139,92,246,.08);border-color:rgba(139,92,246,.2);color:#a78bfa}
+
+/* ── CERTIFICATIONS — shimmer cards ── */
+.certs{background:var(--bg1)}
+.certs-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem}
+.cert-card{position:relative;background:linear-gradient(135deg,var(--bg2),var(--bg3));border:1px solid var(--line);border-radius:4px;padding:2rem;overflow:hidden;transition:border-color .25s,transform .25s,box-shadow .25s;cursor:default}
+.cert-card::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(201,169,110,0.05),transparent);transition:left .6s var(--ease)}
+.cert-card:hover::before{left:100%}
+.cert-card:hover{border-color:var(--goldl);transform:translateY(-4px);box-shadow:0 20px 60px rgba(0,0,0,.6)}
+.cert-card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem}
+.cert-badge-box{width:64px;height:64px;border-radius:3px;background:var(--bg);border:1px solid var(--goldl);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:1.1rem;font-weight:400;color:var(--gold)}
+.cert-ms{display:grid;grid-template-columns:1fr 1fr;gap:2px;width:20px;height:20px}
+.cert-ms span{display:block;border-radius:1px}
+.cert-ms span:nth-child(1){background:#f25022}
+.cert-ms span:nth-child(2){background:#7fba00}
+.cert-ms span:nth-child(3){background:#00a4ef}
+.cert-ms span:nth-child(4){background:#ffb900}
+.cert-ms-label{font-size:10px;color:var(--w35);letter-spacing:.1em;text-transform:uppercase;font-weight:300;margin-top:.35rem}
+.cert-name{font-size:14px;font-weight:500;color:var(--w80);line-height:1.4;margin-bottom:.35rem}
+.cert-sub{font-size:11px;color:var(--w35);font-weight:300}
+
+/* ── CONTACT ── */
+.contact{background:var(--bg)}
+.contact-inner{background:var(--bg1);border:1px solid var(--line);border-radius:6px;overflow:hidden;display:grid;grid-template-columns:2fr 3fr;box-shadow:0 40px 100px rgba(0,0,0,.5)}
+.contact-left{background:linear-gradient(160deg,var(--bg2),var(--bg3));padding:3.5rem;position:relative;overflow:hidden}
+.contact-left::before{content:'';position:absolute;top:-30%;right:-30%;width:70%;height:70%;background:radial-gradient(circle,rgba(201,169,110,0.08) 0%,transparent 70%)}
+.contact-left-head{margin-bottom:2.5rem}
+.contact-left h3{font-family:var(--serif);font-size:1.75rem;font-weight:300;color:var(--w);margin-bottom:.5rem;line-height:1.3}
+.contact-left h3 em{color:var(--gold);font-style:italic}
+.contact-left p{font-size:13.5px;color:var(--w35);line-height:1.8;font-weight:300}
+.clink-items{display:flex;flex-direction:column;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:2px;overflow:hidden;margin-top:2rem}
+.clink{display:flex;align-items:center;gap:1rem;padding:1.1rem 1.25rem;background:var(--bg2);text-decoration:none;transition:background .2s}
+.clink:hover{background:var(--bg3)}
+.clink-icon{width:36px;height:36px;border-radius:50%;border:1px solid var(--goldl);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.clink-icon svg{width:15px;height:15px;fill:var(--gold)}
+.clink-lbl{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--w35);font-weight:300}
+.clink-val{font-size:12.5px;color:var(--w55);font-weight:300}
+.clink-arr{margin-left:auto;color:var(--w15);font-size:16px;transition:color .2s}
+.clink:hover .clink-arr{color:var(--gold)}
+.avail-row{display:flex;align-items:center;gap:.6rem;margin-top:2rem;padding:.6rem 1rem;background:rgba(16,185,129,.06);border:1px solid rgba(16,185,129,.15);border-radius:2px}
+.avail-row .dot{width:6px;height:6px;border-radius:50%;background:#10b981;animation:ping 2s ease-in-out infinite}
+.avail-row span{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#10b981;font-weight:300}
+
+/* contact form (Gemini) */
+.contact-right{padding:3.5rem}
+.contact-right h4{font-family:var(--serif);font-size:1.5rem;font-weight:300;color:var(--w);margin-bottom:.5rem}
+.contact-right p{font-size:13px;color:var(--w35);margin-bottom:2.5rem;font-weight:300;line-height:1.7}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:1.25rem}
+.form-group{display:flex;flex-direction:column;gap:.5rem;margin-bottom:1.25rem}
+.form-group label{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--w35);font-weight:300}
+.form-group input,.form-group textarea{background:var(--bg2);border:1px solid var(--line);border-radius:2px;padding:.85rem 1rem;color:var(--w);font-family:var(--sans);font-size:13.5px;font-weight:300;outline:none;transition:border-color .2s,background .2s;resize:none}
+.form-group input:focus,.form-group textarea:focus{border-color:var(--goldl);background:var(--bg3)}
+.form-group input::placeholder,.form-group textarea::placeholder{color:var(--w15)}
+.btn-form{width:100%;padding:1rem;background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--bg);font-family:var(--sans);font-size:12px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;border:none;border-radius:2px;cursor:pointer;transition:opacity .2s,transform .15s,box-shadow .2s;display:flex;align-items:center;justify-content:center;gap:.6rem}
+.btn-form:hover{opacity:.88;transform:translateY(-2px);box-shadow:0 8px 30px rgba(201,169,110,.25)}
+
+/* ── EDUCATION ── */
+.education{background:var(--bg1)}
+.edu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
+.edu-card{background:var(--bg2);border:1px solid var(--line);border-radius:3px;padding:1.75rem;transition:border-color .25s,transform .2s}
+.edu-card:hover{border-color:var(--goldl);transform:translateY(-3px)}
+.edu-deg{font-family:var(--serif);font-size:1.8rem;font-weight:300;color:var(--gold);margin-bottom:.6rem}
+.edu-name{font-size:13px;font-weight:500;color:var(--w80);margin-bottom:.25rem}
+.edu-inst{font-size:12px;color:var(--w35);font-weight:300;margin-bottom:.85rem}
+.edu-meta{display:flex;flex-wrap:wrap;gap:.4rem}
+.edu-badge{padding:.2rem .65rem;background:var(--goldf);border:1px solid var(--goldl);border-radius:2px;font-size:10px;letter-spacing:.08em;color:var(--gold);font-weight:300}
+
+/* ── FOOTER ── */
+footer{background:#040508;padding:2rem 5rem;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line)}
+footer p{font-size:11px;color:var(--w35);font-weight:300;letter-spacing:.06em}
+.fl{font-family:var(--serif);font-size:1.1rem;font-weight:300;background:linear-gradient(135deg,var(--gold),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+
+/* ── REVEAL ── */
+.r{opacity:0;transform:translateY(28px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.r.v{opacity:1;transform:translateY(0)}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1100px){
+  nav,nav.scrolled{padding:1.2rem 2rem}
+  .nav-links,.nav-hire{display:none}
+  .hero{grid-template-columns:1fr;padding:0 2rem}
+  .hero-right{display:none}
+  .hero-left{padding:8rem 0 4rem}
+  section{padding:5rem 2rem}
+  .about-grid{grid-template-columns:1fr;gap:3rem}
+  .exp-grid{grid-template-columns:1fr 1fr}
+  .zig-timeline::before{left:0;transform:none}
+  .zt{flex-direction:column !important;padding-left:2rem}
+  .zt-dot{left:0;transform:none}
+  .zt-card{width:100% !important;margin:0 !important}
+  .skills-wrap{grid-template-columns:1fr;gap:3rem}
+  .skill-tag-grid{grid-template-columns:1fr}
+  .certs-grid{grid-template-columns:1fr}
+  .contact-inner{grid-template-columns:1fr}
+  .edu-grid{grid-template-columns:1fr}
+  footer{flex-direction:column;gap:.5rem;text-align:center;padding:1.5rem 2rem}
+  .form-row{grid-template-columns:1fr}
+}
+@media(max-width:700px){
+  .exp-grid{grid-template-columns:1fr}
+  .hero-stats{gap:1.5rem}
+}
+</style>
+</head>
+<body>
+
+<div id="prog"></div>
+<div id="cur"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">AS.</a>
+  <ul class="nav-links">
+    <li><a href="#about" onclick="sm(event,'#about')">About</a></li>
+    <li><a href="#expertise" onclick="sm(event,'#expertise')">Expertise</a></li>
+    <li><a href="#experience" onclick="sm(event,'#experience')">Experience</a></li>
+    <li><a href="#skills" onclick="sm(event,'#skills')">Skills</a></li>
+    <li><a href="#certifications" onclick="sm(event,'#certifications')">Certs</a></li>
+    <li><a href="#contact" onclick="sm(event,'#contact')">Contact</a></li>
+  </ul>
+  <a href="#contact" onclick="sm(event,'#contact')" class="nav-hire">Hire Me →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home" style="padding-left:5rem;padding-right:5rem">
+  <canvas id="stars"></canvas>
+  <div class="hero-left">
+    <div class="avail-badge">
+      <div class="avail-ping"></div>
+      <span>Open to new opportunities</span>
+    </div>
+    <h1 class="hero-name">
+      <span class="first">Asif</span>
+      <span class="last">Shaikh</span>
+    </h1>
+    <div class="hero-typed-wrap">
+      <span class="hero-typed-label">Currently:</span>
+      <span class="hero-typed" id="typed"></span>
+    </div>
+    <p class="hero-desc">
+      8+ years delivering Microsoft Dynamics 365 CE across Sales, Customer Service, CI–Journeys, Field Service &amp; Contact Center. Translating complex business needs into scalable platform solutions — from discovery workshop to go-live.
+    </p>
+    <div class="hero-cta">
+      <a href="#experience" onclick="sm(event,'#experience')" class="btn-primary">View Experience →</a>
+      <a href="https://www.linkedin.com/in/asif-shaikh-967484b2/" target="_blank" class="btn-secondary">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452z"/></svg>
+        LinkedIn
+      </a>
+    </div>
+    <div class="hero-stats">
+      <div class="hstat"><div class="hstat-num">8+</div><div class="hstat-label">Years Exp.</div></div>
+      <div class="hstat"><div class="hstat-num">4</div><div class="hstat-label">MS Certs</div></div>
+      <div class="hstat"><div class="hstat-num">6+</div><div class="hstat-label">D365 Modules</div></div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="orbit-wrap">
+      <div class="orbit-ring ring1"></div>
+      <div class="orbit-ring ring2"></div>
+      <div class="orbit-ring ring3"></div>
+      <div class="orbit-core">
+        <div class="orbit-core-mono">AS</div>
+        <div class="orbit-core-label">D365 FC</div>
+      </div>
+      <div class="orbit-tag t1">D365 Sales</div>
+      <div class="orbit-tag t2">Customer Service</div>
+      <div class="orbit-tag t3">CI – Journeys</div>
+      <div class="orbit-tag t4">Field Service</div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-inner">
+    <span class="mi"><span class="md"></span>D365 Sales</span>
+    <span class="mi"><span class="md"></span>Customer Service</span>
+    <span class="mi"><span class="md"></span>Omnichannel</span>
+    <span class="mi"><span class="md"></span>CI – Journeys</span>
+    <span class="mi"><span class="md"></span>Field Service</span>
+    <span class="mi"><span class="md"></span>Contact Center</span>
+    <span class="mi"><span class="md"></span>ERP Integration</span>
+    <span class="mi"><span class="md"></span>FDD Writing</span>
+    <span class="mi"><span class="md"></span>Fit-Gap Analysis</span>
+    <span class="mi"><span class="md"></span>UAT Management</span>
+    <span class="mi"><span class="md"></span>Business Process Mapping</span>
+    <span class="mi"><span class="md"></span>Solution Design</span>
+    <span class="mi"><span class="md"></span>Power Platform</span>
+    <span class="mi"><span class="md"></span>D365 Sales</span>
+    <span class="mi"><span class="md"></span>Customer Service</span>
+    <span class="mi"><span class="md"></span>Omnichannel</span>
+    <span class="mi"><span class="md"></span>CI – Journeys</span>
+    <span class="mi"><span class="md"></span>Field Service</span>
+    <span class="mi"><span class="md"></span>Contact Center</span>
+    <span class="mi"><span class="md"></span>ERP Integration</span>
+    <span class="mi"><span class="md"></span>FDD Writing</span>
+    <span class="mi"><span class="md"></span>Fit-Gap Analysis</span>
+    <span class="mi"><span class="md"></span>UAT Management</span>
+    <span class="mi"><span class="md"></span>Business Process Mapping</span>
+    <span class="mi"><span class="md"></span>Solution Design</span>
+    <span class="mi"><span class="md"></span>Power Platform</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="container">
+    <div class="sh r"><span class="sn">01</span><h2 class="st">About Me</h2><div class="sr"></div></div>
+    <div class="about-grid">
+      <div>
+        <p class="about-lead r">Bridging business complexity and <em>Microsoft Dynamics 365</em> with precision, clarity, and craft.</p>
+        <p class="about-body r">I'm Asif Shaikh — a Microsoft Dynamics 365 Functional Consultant based in Aurangabad, Maharashtra. With 8+ years of hands-on experience, I specialise in implementing and optimising D365 CE solutions across Sales, Customer Service, Customer Insights – Journeys, Field Service, and Contact Center modules.</p>
+        <p class="about-body r">Currently serving as Lead Engineer – Dynamics CE at R Systems International, I lead end-to-end functional delivery — from stakeholder workshops and fit-gap analysis to FDD authoring, UAT management, and go-live support. My strength lies in making complex business requirements simple, and simple configurations powerful.</p>
+        <div class="about-pills r">
+          <span class="pill">D365 CE</span><span class="pill">CI – Journeys</span><span class="pill">Contact Center</span><span class="pill">Power Apps</span><span class="pill">ERP Integration</span><span class="pill">FDD / BRD</span><span class="pill">UAT</span><span class="pill">Solution Design</span>
+        </div>
+      </div>
+      <div class="about-stats r">
+        <div class="stat-card">
+          <div class="stat-icon" style="background:rgba(201,169,110,.1)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#c9a96e" stroke-width="1.5"><path d="M20 7H4a2 2 0 00-2 2v6a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
+          </div>
+          <div><div class="stat-num">8+</div><div class="stat-lbl">Years of Experience</div></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background:rgba(59,130,246,.1)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="1.5"><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
+          </div>
+          <div><div class="stat-num">4</div><div class="stat-lbl">MS Certifications</div></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background:rgba(139,92,246,.1)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.5"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+          </div>
+          <div><div class="stat-num">6+</div><div class="stat-lbl">D365 Modules</div></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background:rgba(16,185,129,.1)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+          </div>
+          <div><div class="stat-num">100%</div><div class="stat-lbl">Delivery Focus</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERTISE -->
+<section class="expertise" id="expertise">
+  <div class="container">
+    <div class="sh r"><span class="sn">02</span><h2 class="st">Expertise</h2><div class="sr"></div></div>
+    <div class="exp-grid">
+      <div class="ec r">
+        <div class="ec-num">01</div>
+        <div class="ec-icon"><svg viewBox="0 0 24 24"><path d="M20 6h-3V4c0-1.1-.9-2-2-2H9c-1.1 0-2 .9-2 2v2H4c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-9-2h6v2h-6V4z"/></svg></div>
+        <h3>D365 Sales</h3>
+        <p>End-to-end lead-to-cash — leads, accounts, contacts, opportunities, quotes, and custom sales workflows aligned to client business cycles.</p>
+        <div class="ec-tags"><span class="tag">Lead Mgmt</span><span class="tag">Opportunity Pipeline</span><span class="tag">Forecasting</span><span class="tag">Territory</span></div>
+      </div>
+      <div class="ec r d1">
+        <div class="ec-num">02</div>
+        <div class="ec-icon"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H5.17L4 17.17V4h16v12z"/></svg></div>
+        <h3>Customer Service &amp; Contact Center</h3>
+        <p>Case lifecycle, omnichannel routing, SLA design, knowledge base, agent scripting, and unified customer service platform across all channels.</p>
+        <div class="ec-tags"><span class="tag">Case Mgmt</span><span class="tag">Omnichannel</span><span class="tag">SLAs</span><span class="tag">Contact Center</span></div>
+      </div>
+      <div class="ec r d2">
+        <div class="ec-num">03</div>
+        <div class="ec-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg></div>
+        <h3>Customer Insights – Journeys</h3>
+        <p>Real-time journey orchestration, segmentation, conditional email logic, event management, and marketing analytics across B2B and B2C programmes.</p>
+        <div class="ec-tags"><span class="tag">Real-Time Journeys</span><span class="tag">Segmentation</span><span class="tag">Email Logic</span><span class="tag">Events</span></div>
+      </div>
+      <div class="ec r">
+        <div class="ec-num">04</div>
+        <div class="ec-icon"><svg viewBox="0 0 24 24"><path d="M19.5 3.5L18 2l-1.5 1.5L15 2l-1.5 1.5L12 2l-1.5 1.5L9 2 7.5 3.5 6 2 4.5 3.5 3 2v20l1.5-1.5L6 22l1.5-1.5L9 22l1.5-1.5L12 22l1.5-1.5L15 22l1.5-1.5L18 22l1.5-1.5L21 22V2l-1.5 1.5zM19 19.09H5V4.91h14v14.18zM7 15h10v2H7zm0-4h10v2H7zm0-4h10v2H7z"/></svg></div>
+        <h3>Requirements &amp; FDD Writing</h3>
+        <p>Structured discovery workshops, stakeholder requirements capture, Functional Design Documents, and developer-ready specs from As-Is to To-Be.</p>
+        <div class="ec-tags"><span class="tag">Workshops</span><span class="tag">FDD</span><span class="tag">BRD</span><span class="tag">As-Is/To-Be</span></div>
+      </div>
+      <div class="ec r d1">
+        <div class="ec-num">05</div>
+        <div class="ec-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+        <h3>Test Cases &amp; UAT</h3>
+        <p>End-to-end test plans, functional test case design, coordinating UAT cycles, managing defect logs, and ensuring quality sign-off before every go-live.</p>
+        <div class="ec-tags"><span class="tag">Test Plans</span><span class="tag">UAT</span><span class="tag">Defect Mgmt</span><span class="tag">Sign-off</span></div>
+      </div>
+      <div class="ec r d2">
+        <div class="ec-num">06</div>
+        <div class="ec-icon"><svg viewBox="0 0 24 24"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"/></svg></div>
+        <h3>ERP &amp; Third-Party Integration</h3>
+        <p>Functional design for D365 CE integrations with SAP, Oracle, Microsoft F&amp;O — data mapping, interface specs, sync strategy, and error handling.</p>
+        <div class="ec-tags"><span class="tag">SAP</span><span class="tag">Oracle</span><span class="tag">D365 F&O</span><span class="tag">API Design</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="experience" id="experience">
+  <div class="container">
+    <div class="sh r"><span class="sn">03</span><h2 class="st">Experience</h2><div class="sr"></div></div>
+    <div class="zig-timeline">
+
+      <!-- R Systems -->
+      <div class="zt r">
+        <div class="zt-dot"></div>
+        <div class="zt-card">
+          <div class="zt-current-badge"><span>Current Role</span></div>
+          <p class="zt-co">R Systems International</p>
+          <h3 class="zt-role">Lead Engineer — Dynamics CE</h3>
+          <p class="zt-period">Jan 2026 — Present</p>
+          <p class="zt-env">Microsoft Dynamics 365 CE · Power Platform · ERP Integrations</p>
+          <ul class="zt-bullets">
+            <li>Leading functional delivery across D365 Sales, Customer Service, Contact Center, CI–Journeys, and Field Service — serving as the primary functional bridge between business stakeholders and delivery teams</li>
+            <li>Conducting end-to-end discovery workshops, fit-gap analysis, and authoring FDDs for complex multi-module CE implementations</li>
+            <li>Designing functional integration specifications connecting D365 CE with ERP platforms — data flows, interface contracts, and sync strategies</li>
+            <li>Overseeing UAT planning, test case execution, and defect triage through to quality sign-off and go-live</li>
+            <li>Mentoring junior functional consultants and providing functional leadership across the delivery programme</li>
+          </ul>
+          <div class="zt-mods"><span class="mtag">D365 Sales</span><span class="mtag">Customer Service</span><span class="mtag">Contact Center</span><span class="mtag">CI–Journeys</span><span class="mtag">Field Service</span><span class="mtag">ERP Integration</span></div>
+        </div>
+      </div>
+
+      <!-- Exigo -->
+      <div class="zt r">
+        <div class="zt-dot"></div>
+        <div class="zt-card">
+          <p class="zt-co">Exigo Tech</p>
+          <h3 class="zt-role">MS Dynamics CRM Functional Consultant</h3>
+          <p class="zt-period">Jun 2021 — Jan 2026 · 4 yrs 7 months</p>
+          <p class="zt-env">Microsoft Dynamics 365 · Power Apps</p>
+          <ul class="zt-bullets">
+            <li>Overseeing end-to-end D365 CRM project delivery — requirements, development oversight, testing, and deployment</li>
+            <li>Customised Sales and Marketing modules — leads, accounts, contacts, opportunities, and custom entities aligned to client processes</li>
+            <li>Prepared Functional Design Documents and As-Is / To-Be process specifications; translated requirements into developer-ready specs</li>
+            <li>Developed and executed test plans for UAT; managed defect resolution cycles through to go-live sign-off</li>
+            <li>Delivered end-user training, Q&amp;A sessions, and user documentation to drive platform adoption</li>
+          </ul>
+          <div class="zt-mods"><span class="mtag">D365 Sales</span><span class="mtag">Customer Service</span><span class="mtag">Marketing</span><span class="mtag">Power Apps</span><span class="mtag">FDD</span><span class="mtag">UAT</span></div>
+        </div>
+      </div>
+
+      <!-- MindQuad -->
+      <div class="zt r">
+        <div class="zt-dot"></div>
+        <div class="zt-card">
+          <p class="zt-co">MindQuad Solution Pvt. Ltd.</p>
+          <h3 class="zt-role">MS Dynamics CRM Functional Consultant</h3>
+          <p class="zt-period">Jan 2021 — Jun 2021 · 6 months</p>
+          <p class="zt-env">Microsoft Dynamics 365 · Power Apps</p>
+          <ul class="zt-bullets">
+            <li>Customised Sales and Marketing module entities aligned to client business processes</li>
+            <li>Created and configured workflows; managed data import/export between Excel and D365 CRM</li>
+            <li>Prepared FDDs and supported stakeholder engagement to define and validate business requirements</li>
+          </ul>
+          <div class="zt-mods"><span class="mtag">D365 Sales</span><span class="mtag">Workflows</span><span class="mtag">Data Migration</span><span class="mtag">Configuration</span></div>
+        </div>
+      </div>
+
+      <!-- IQRA -->
+      <div class="zt r">
+        <div class="zt-dot"></div>
+        <div class="zt-card">
+          <p class="zt-co">IQRA Technology Pvt. Ltd.</p>
+          <h3 class="zt-role">MS Dynamics CRM Functional Consultant</h3>
+          <p class="zt-period">May 2018 — Jan 2021 · 2 yrs 8 months</p>
+          <p class="zt-env">Microsoft Dynamics CRM 2013 · Microsoft CRM</p>
+          <ul class="zt-bullets">
+            <li>Configured CRM forms, screens, views, and workflows using Dynamics CRM 2011/2013 customisation tools</li>
+            <li>Developed dynamic reports using the CRM reporting interface and SSRS SQL 2012 engine</li>
+            <li>Built Main view and Single view Dashboards; managed solution deployment in enterprise environments</li>
+          </ul>
+          <div class="zt-mods"><span class="mtag">Dynamics CRM 2013</span><span class="mtag">SSRS</span><span class="mtag">Dashboards</span><span class="mtag">Configuration</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="skills-s" id="skills">
+  <div class="container">
+    <div class="sh r"><span class="sn">04</span><h2 class="st">Skills &amp; Competencies</h2><div class="sr"></div></div>
+    <div class="skills-wrap">
+      <div class="r">
+        <p class="sg-title">D365 Module Proficiency</p>
+        <div class="sbi"><div class="srow"><span class="sname">D365 Sales</span><span class="spct">95%</span></div><div class="btrack"><div class="bfill" style="width:95%"></div></div></div>
+        <div class="sbi"><div class="srow"><span class="sname">Customer Service &amp; Omnichannel</span><span class="spct">92%</span></div><div class="btrack"><div class="bfill" style="width:92%"></div></div></div>
+        <div class="sbi"><div class="srow"><span class="sname">Customer Insights – Journeys</span><span class="spct">88%</span></div><div class="btrack"><div class="bfill" style="width:88%"></div></div></div>
+        <div class="sbi"><div class="srow"><span class="sname">Field Service</span><span class="spct">85%</span></div><div class="btrack"><div class="bfill" style="width:85%"></div></div></div>
+        <div class="sbi"><div class="srow"><span class="sname">Power Apps &amp; Power Automate</span><span class="spct">88%</span></div><div class="btrack"><div class="bfill" style="width:88%"></div></div></div>
+        <div class="sbi"><div class="srow"><span class="sname">Power BI Reporting</span><span class="spct">72%</span></div><div class="btrack"><div class="bfill" style="width:72%"></div></div></div>
+      </div>
+      <div class="r">
+        <p class="sg-title">Functional Delivery Skills</p>
+        <div class="sbi"><div class="srow"><span class="sname">Requirements Gathering &amp; Workshops</span><span class="spct">97%</span></div><div class="btrack"><div class="bfill" style="width:97%"></div></div></div>
+        <div class="sbi"><div class="srow"><span class="sname">Functional Design Documents (FDD)</span><span class="spct">95%</span></div><div class="btrack"><div class="bfill" style="width:95%"></div></div></div>
+        <div class="sbi"><div class="srow"><span class="sname">Business Process Mapping (As-Is/To-Be)</span><span class="spct">94%</span></div><div class="btrack"><div class="bfill" style="width:94%"></div></div></div>
+        <div class="sbi"><div class="srow"><span class="sname">Test Cases &amp; UAT Management</span><span class="spct">92%</span></div><div class="btrack"><div class="bfill" style="width:92%"></div></div></div>
+        <div class="sbi"><div class="srow"><span class="sname">Fit-Gap Analysis &amp; Solution Design</span><span class="spct">90%</span></div><div class="btrack"><div class="bfill" style="width:90%"></div></div></div>
+        <div class="sbi"><div class="srow"><span class="sname">ERP Integration (Functional Design)</span><span class="spct">86%</span></div><div class="btrack"><div class="bfill" style="width:86%"></div></div></div>
+      </div>
+    </div>
+    <div class="skill-tag-grid r" style="margin-top:4rem">
+      <div class="stg-cell">
+        <div class="stg-head"><svg viewBox="0 0 24 24" fill="none" stroke="#c9a96e" stroke-width="1.5" width="16" height="16"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg><span>D365 Platform</span></div>
+        <div class="stg-tags">
+          <span class="stg-tag gold">Dynamics 365 Cloud</span><span class="stg-tag gold">Dynamics 2013/2016</span><span class="stg-tag gold">Sales Module</span><span class="stg-tag gold">Customer Service</span><span class="stg-tag gold">Field Service</span><span class="stg-tag gold">Marketing</span><span class="stg-tag gold">Omnichannel</span><span class="stg-tag gold">XRM Toolbox</span>
+        </div>
+      </div>
+      <div class="stg-cell">
+        <div class="stg-head"><svg viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="1.5" width="16" height="16"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg><span>Power Platform</span></div>
+        <div class="stg-tags">
+          <span class="stg-tag blue">Power Apps</span><span class="stg-tag blue">Power Automate</span><span class="stg-tag blue">Power BI</span><span class="stg-tag blue">Custom Solutions</span><span class="stg-tag blue">Workflow Automation</span><span class="stg-tag blue">Solution Architecture</span>
+        </div>
+      </div>
+      <div class="stg-cell">
+        <div class="stg-head"><svg viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="1.5" width="16" height="16"><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg><span>Functional Delivery</span></div>
+        <div class="stg-tags">
+          <span class="stg-tag green">FDD Writing</span><span class="stg-tag green">BRD</span><span class="stg-tag green">UAT Management</span><span class="stg-tag green">Fit-Gap Analysis</span><span class="stg-tag green">Process Mapping</span><span class="stg-tag green">Stakeholder Mgmt</span><span class="stg-tag green">End-User Training</span>
+        </div>
+      </div>
+      <div class="stg-cell">
+        <div class="stg-head"><svg viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.5" width="16" height="16"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg><span>Tools &amp; Tech</span></div>
+        <div class="stg-tags">
+          <span class="stg-tag purple">Data Migration Tool</span><span class="stg-tag purple">SSRS</span><span class="stg-tag purple">SQL Server</span><span class="stg-tag purple">JavaScript (Basic)</span><span class="stg-tag purple">Agile / Scrum</span><span class="stg-tag purple">Project Management</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section class="certs" id="certifications">
+  <div class="container">
+    <div class="sh r"><span class="sn">05</span><h2 class="st">Certifications</h2><div class="sr"></div></div>
+    <div class="certs-grid">
+      <div class="cert-card r">
+        <div class="cert-card-top">
+          <div class="cert-badge-box">PL-600</div>
+          <div><div class="cert-ms"><span></span><span></span><span></span><span></span></div><div class="cert-ms-label">Microsoft Certified</div></div>
+        </div>
+        <p class="cert-name">Power Platform Solution Architect Expert</p>
+        <p class="cert-sub">Microsoft Certified Expert</p>
+      </div>
+      <div class="cert-card r d1">
+        <div class="cert-card-top">
+          <div class="cert-badge-box">PL-200</div>
+          <div><div class="cert-ms"><span></span><span></span><span></span><span></span></div><div class="cert-ms-label">Microsoft Certified</div></div>
+        </div>
+        <p class="cert-name">Power Platform Functional Consultant Associate</p>
+        <p class="cert-sub">Microsoft Certified Associate</p>
+      </div>
+      <div class="cert-card r">
+        <div class="cert-card-top">
+          <div class="cert-badge-box">PL-900</div>
+          <div><div class="cert-ms"><span></span><span></span><span></span><span></span></div><div class="cert-ms-label">Microsoft Certified</div></div>
+        </div>
+        <p class="cert-name">Microsoft Power Platform Fundamentals</p>
+        <p class="cert-sub">Microsoft Certified Fundamentals</p>
+      </div>
+      <div class="cert-card r d1">
+        <div class="cert-card-top">
+          <div class="cert-badge-box">MB-910</div>
+          <div><div class="cert-ms"><span></span><span></span><span></span><span></span></div><div class="cert-ms-label">Microsoft Certified</div></div>
+        </div>
+        <p class="cert-name">Microsoft Dynamics 365 Fundamentals (CRM)</p>
+        <p class="cert-sub">Microsoft Certified Fundamentals</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section class="education" id="education">
+  <div class="container">
+    <div class="sh r"><span class="sn">06</span><h2 class="st">Education</h2><div class="sr"></div></div>
+    <div class="edu-grid">
+      <div class="edu-card r"><p class="edu-deg">BCS</p><p class="edu-name">Bachelor of Computer Science</p><p class="edu-inst">EILLM University</p><div class="edu-meta"><span class="edu-badge">2014</span><span class="edu-badge">65.90%</span><span class="edu-badge">First Class</span></div></div>
+      <div class="edu-card r d1"><p class="edu-deg">HSC</p><p class="edu-name">Higher Secondary Certificate</p><p class="edu-inst">Maulana Azad College</p><div class="edu-meta"><span class="edu-badge">2011</span><span class="edu-badge">46.68%</span><span class="edu-badge">First Class</span></div></div>
+      <div class="edu-card r d2"><p class="edu-deg">SSC</p><p class="edu-name">Secondary School Certificate</p><p class="edu-inst">Maharashtra Board</p><div class="edu-meta"><span class="edu-badge">2009</span><span class="edu-badge">79.85%</span><span class="edu-badge">First Class</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="container">
+    <div class="sh r"><span class="sn">07</span><h2 class="st">Let's Connect</h2><div class="sr"></div></div>
+    <div class="contact-inner r">
+      <div class="contact-left">
+        <div class="contact-left-head">
+          <h3>Ready to build something <em>exceptional</em> together?</h3>
+          <p style="margin-top:.75rem">Open to senior functional consulting, lead consultant, and solution architect opportunities across the Dynamics 365 and Power Platform ecosystem.</p>
+        </div>
+        <div class="clink-items">
+          <a href="mailto:Asif.shaikh96614@gmail.com" class="clink">
+            <div class="clink-icon"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></div>
+            <div><p class="clink-lbl">Email</p><p class="clink-val">Asif.shaikh96614@gmail.com</p></div>
+            <span class="clink-arr">›</span>
+          </a>
+          <a href="tel:+919923001900" class="clink">
+            <div class="clink-icon"><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg></div>
+            <div><p class="clink-lbl">Mobile</p><p class="clink-val">+91 9923001900</p></div>
+            <span class="clink-arr">›</span>
+          </a>
+          <a href="https://www.linkedin.com/in/asif-shaikh-967484b2/" target="_blank" class="clink">
+            <div class="clink-icon"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452z"/></svg></div>
+            <div><p class="clink-lbl">LinkedIn</p><p class="clink-val">asif-shaikh-967484b2</p></div>
+            <span class="clink-arr">›</span>
+          </a>
+          <div class="clink">
+            <div class="clink-icon"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg></div>
+            <div><p class="clink-lbl">Location</p><p class="clink-val">Aurangabad, Maharashtra 431001</p></div>
+          </div>
+        </div>
+        <div class="avail-row"><div class="dot"></div><span>Available for new opportunities</span></div>
+      </div>
+      <div class="contact-right">
+        <h4>Send a Message</h4>
+        <p>Have a project in mind or want to discuss a Dynamics 365 implementation? I'd love to hear from you.</p>
+        <div class="form-row">
+          <div class="form-group"><label>Your Name</label><input type="text" placeholder="Jane Doe"></div>
+          <div class="form-group"><label>Your Email</label><input type="email" placeholder="jane@company.com"></div>
+        </div>
+        <div class="form-group"><label>Subject</label><input type="text" placeholder="D365 Implementation Enquiry"></div>
+        <div class="form-group"><label>Message</label><textarea rows="5" placeholder="Tell me about your project..."></textarea></div>
+        <button class="btn-form" onclick="handleForm(this)">
+          <span>Send Message</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="fl">Asif Shaikh</span>
+  <p>© 2026 · D365 Functional Consultant · Power Platform Specialist · Aurangabad, India</p>
+  <p style="color:rgba(240,236,227,.2);font-size:10px;letter-spacing:.1em">DESIGNED TO IMPRESS</p>
+</footer>
+
+<script>
+// scroll progress
+const prog=document.getElementById('prog');
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>{
+  const st=window.scrollY,dh=document.documentElement.scrollHeight-window.innerHeight;
+  prog.style.width=(st/dh*100)+'%';
+  nav.classList.toggle('scrolled',st>60);
+});
+
+// cursor
+const cur=document.getElementById('cur');
+document.addEventListener('mousemove',e=>{cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px'});
+
+// smooth scroll
+function sm(e,h){e.preventDefault();const t=document.querySelector(h);if(t){const top=t.getBoundingClientRect().top+window.scrollY-80;window.scrollTo({top,behavior:'smooth'})}}
+
+// typed roles
+const roles=['Lead Engineer – Dynamics CE','D365 Functional Consultant','Power Platform Specialist','CRM Solution Designer'];
+let ri=0,ci=0,del=false;
+const typed=document.getElementById('typed');
+function typeIt(){
+  if(!del){
+    if(ci<roles[ri].length){typed.textContent=roles[ri].slice(0,++ci);setTimeout(typeIt,60)}
+    else{del=true;setTimeout(typeIt,2200)}
+  } else {
+    if(ci>0){typed.textContent=roles[ri].slice(0,--ci);setTimeout(typeIt,30)}
+    else{del=false;ri=(ri+1)%roles.length;setTimeout(typeIt,400)}
+  }
+}
+typeIt();
+
+// star canvas
+const canvas=document.getElementById('stars');
+const ctx=canvas.getContext('2d');
+function resize(){canvas.width=canvas.offsetWidth;canvas.height=canvas.offsetHeight}
+resize();window.addEventListener('resize',resize);
+const stars=Array.from({length:120},()=>({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*.8+.2,o:Math.random()*.5+.1,s:Math.random()*.3+.1,d:Math.random()>.5?1:-1}));
+function drawStars(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  stars.forEach(s=>{
+    s.o+=s.s*.005*s.d;
+    if(s.o>0.6||s.o<0.05)s.d*=-1;
+    ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+    ctx.fillStyle=`rgba(201,169,110,${s.o})`;ctx.fill();
+  });
+  requestAnimationFrame(drawStars);
+}
+drawStars();
+
+// scroll reveal
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('v');obs.unobserve(e.target)}});
+},{threshold:.07,rootMargin:'0px 0px -25px 0px'});
+document.querySelectorAll('.r').forEach(el=>obs.observe(el));
+
+// form handler
+function handleForm(btn){
+  const orig=btn.innerHTML;
+  btn.innerHTML='<span>Sending...</span>';
+  btn.style.opacity='.7';
+  setTimeout(()=>{btn.innerHTML='<span>Message Sent ✓</span>';btn.style.background='rgba(16,185,129,.9)';},1500);
+  setTimeout(()=>{btn.innerHTML=orig;btn.style.background='';btn.style.opacity='';},4000);
+}
+</script>
+</body>
+</html>
