@@ -734,9 +734,9 @@ footer p{font-size:11px;color:var(--w35);font-weight:300;letter-spacing:.06em}
           <p style="margin-top:.75rem">Open to senior functional consulting, lead consultant, and solution architect opportunities across the Dynamics 365 and Power Platform ecosystem.</p>
         </div>
         <div class="clink-items">
-          <a href="/cdn-cgi/l/email-protection#92d3e1fbf4bce1faf3fbf9faaba4a4a3a6d2f5fff3fbfebcf1fdff" class="clink">
+          <a href="/cdn-cgi/l/email-protection#78390b111e560b1019111310414e4e494c381f15191114561b1715" class="clink">
             <div class="clink-icon"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></div>
-            <div><p class="clink-lbl">Email</p><p class="clink-val"><span class="__cf_email__" data-cfemail="d697a5bfb0f8a5beb7bfbdbeefe0e0e7e296b1bbb7bfbaf8b5b9bb">[email&#160;protected]</span></p></div>
+            <div><p class="clink-lbl">Email</p><p class="clink-val"><span class="__cf_email__" data-cfemail="1756647e7139647f767e7c7f2e2121262357707a767e7b3974787a">[email&#160;protected]</span></p></div>
             <span class="clink-arr">›</span>
           </a>
           <a href="tel:+919923001900" class="clink">
@@ -759,16 +759,23 @@ footer p{font-size:11px;color:var(--w35);font-weight:300;letter-spacing:.06em}
       <div class="contact-right">
         <h4>Send a Message</h4>
         <p>Have a project in mind or want to discuss a Dynamics 365 implementation? I'd love to hear from you.</p>
-        <div class="form-row">
-          <div class="form-group"><label>Your Name</label><input type="text" placeholder="Jane Doe"></div>
-          <div class="form-group"><label>Your Email</label><input type="email" placeholder="jane@company.com"></div>
+        <div id="form-success" style="display:none;padding:1.5rem;background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.25);border-radius:3px;margin-bottom:1.5rem">
+          <p style="color:#4ade80;font-size:14px;margin:0;font-weight:400">✓ Message sent! I'll get back to you within 24 hours.</p>
         </div>
-        <div class="form-group"><label>Subject</label><input type="text" placeholder="D365 Implementation Enquiry"></div>
-        <div class="form-group"><label>Message</label><textarea rows="5" placeholder="Tell me about your project..."></textarea></div>
-        <button class="btn-form" onclick="handleForm(this)">
-          <span>Send Message</span>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
-        </button>
+        <form id="contact-form" action="https://formspree.io/f/mreoegwk" method="POST" onsubmit="submitForm(event)">
+          <input type="hidden" name="_subject" value="New portfolio enquiry — Asif Shaikh">
+          <input type="hidden" name="_next" value="https://asif9923.github.io/AsifShaikh.github.io/">
+          <div class="form-row">
+            <div class="form-group"><label>Your Name</label><input type="text" name="name" placeholder="Jane Doe" required></div>
+            <div class="form-group"><label>Your Email</label><input type="email" name="email" placeholder="jane@company.com" required></div>
+          </div>
+          <div class="form-group"><label>Subject</label><input type="text" name="subject" placeholder="D365 Implementation Enquiry" required></div>
+          <div class="form-group"><label>Message</label><textarea rows="5" name="message" placeholder="Tell me about your project..." required></textarea></div>
+          <button type="submit" class="btn-form" id="submit-btn">
+            <span>Send Message</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+          </button>
+        </form>
       </div>
     </div>
   </div>
@@ -837,14 +844,25 @@ const obs=new IntersectionObserver(entries=>{
 },{threshold:.07,rootMargin:'0px 0px -25px 0px'});
 document.querySelectorAll('.r').forEach(el=>obs.observe(el));
 
-// form handler
-function handleForm(btn){
+// form handler — Formspree
+async function submitForm(e){
+  e.preventDefault();
+  const form=document.getElementById('contact-form');
+  const btn=document.getElementById('submit-btn');
   const orig=btn.innerHTML;
   btn.innerHTML='<span>Sending...</span>';
-  btn.style.opacity='.7';
-  setTimeout(()=>{btn.innerHTML='<span>Message Sent ✓</span>';btn.style.background='rgba(16,185,129,.9)';},1500);
-  setTimeout(()=>{btn.innerHTML=orig;btn.style.background='';btn.style.opacity='';},4000);
-}
-</script>
-</body>
-</html>
+  btn.disabled=true;btn.style.opacity='.7';
+  try{
+    const res=await fetch(form.action,{
+      method:'POST',
+      body:new FormData(form),
+      headers:{Accept:'application/json'}
+    });
+    if(res.ok){
+      form.style.display='none';
+      document.getElementById('form-success').style.display='block';
+    } else {
+      const data=await res.json();
+      throw new Error(data.error||'Submission failed');
+    }
+  } catch(err){
